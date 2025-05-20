@@ -1,8 +1,16 @@
 [PSCustomObject]@{
-    Welcome         = "
-╔══════════════════════════════════╗
-║ Willkommen bei SpotX für Windows ║
-╚══════════════════════════════════╝"
+    Welcome = """
+███╗   ███╗ █████╗ ██████╗ ██╗███████╗██╗   ██╗    ██████╗ ██████╗  ██████╗
+████╗ ████║██╔══██╗██╔══██╗██║██╔════╝╚██╗ ██╔╝    ██╔══██╗██╔══██╗██╔═══██╗
+██╔████╔██║███████║██████╔╝██║█████╗   ╚████╔╝     ██████╔╝██████╔╝██║   ██║
+██║╚██╔╝██║██╔══██║██╔══██╗██║██╔══╝    ╚██╔╝      ██╔═══╝ ██╔══██╗██║   ██║
+██║ ╚═╝ ██║██║  ██║██║  ██║██║██║        ██║       ██║     ██║  ██║╚██████╔╝
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝        ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚═════╝
+
+         Marify Pro - Make Spotify Premium LIFETIME
+
+                Join us at discord.gg/marx
+                """
     Incorrect       = "Hoppla, ein falscher Wert,"
     Incorrect2      = "bitte geben Sie einen neuen Wert ein in "
     Download        = "Fehler beim Download"
