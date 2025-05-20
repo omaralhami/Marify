@@ -332,8 +332,18 @@ function CallLang($clg) {
 function Check-Password {
     $maxAttempts = 3
     $attempts = 0
-    $correctPassword = "notmarlol" # Secure password for agents
+    $correctPassword = "MarifyPro2024!" # Secure password for agents
     
+    Write-Host "╔════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "║               Welcome to Marify Pro Installation           ║" -ForegroundColor Cyan
+    Write-Host "╠════════════════════════════════════════════════════════════╣" -ForegroundColor Cyan
+    Write-Host "║ IMPORTANT:                                                 ║" -ForegroundColor Yellow
+    Write-Host "║ • This installation requires agent verification            ║" -ForegroundColor Yellow
+    Write-Host "║ • Join our Discord server: discord.gg/marx                ║" -ForegroundColor Yellow
+    Write-Host "║ • Create a ticket and wait for an agent                   ║" -ForegroundColor Yellow
+    Write-Host "║ • The agent will connect via TeamViewer to enter password ║" -ForegroundColor Yellow
+    Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host
     
     while ($attempts -lt $maxAttempts) {
         $securePassword = Read-Host "Enter agent password" -AsSecureString
