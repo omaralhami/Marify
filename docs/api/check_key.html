@@ -7,12 +7,11 @@
         const urlParams = new URLSearchParams(window.location.search);
         const key = urlParams.get('key');
         const sid = urlParams.get('sid');
-        const bind = urlParams.get('bind') === 'true';
 
         // Load used keys from keys.json
         fetch('../keys.json')
             .then(response => response.json())
-            .then(async data => {
+            .then(data => {
                 let result = {
                     valid: false,
                     message: "Invalid key"
@@ -20,31 +19,12 @@
 
                 if (key && sid) {
                     if (data.used_keys.hasOwnProperty(key)) {
-                        // Key exists, check binding
-                        if (data.used_keys[key] === null && bind) {
-                            // Key is unused and we want to bind it
-                            data.used_keys[key] = sid;
-                            
-                            // Save the updated data
-                            try {
-                                await fetch('/api/save_keys', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(data)
-                                });
-                                
-                                result = {
-                                    valid: true,
-                                    message: "Key successfully bound to your PC"
-                                };
-                            } catch (error) {
-                                result = {
-                                    valid: false,
-                                    message: "Error binding key: " + error.message
-                                };
-                            }
+                        if (data.used_keys[key] === null) {
+                            // Key exists and is not bound
+                            result = {
+                                valid: true,
+                                message: "Key is valid and ready to bind"
+                            };
                         }
                         else if (data.used_keys[key] === sid) {
                             // Key is already bound to this PC
@@ -53,18 +33,11 @@
                                 message: "Key valid and matches this PC"
                             };
                         }
-                        else if (data.used_keys[key] !== null) {
+                        else {
                             // Key is bound to a different PC
                             result = {
                                 valid: false,
                                 message: "Key is already used on another PC"
-                            };
-                        }
-                        else {
-                            // Key exists but not bound
-                            result = {
-                                valid: true,
-                                message: "Key is valid and ready to bind"
                             };
                         }
                     }

@@ -20,15 +20,24 @@
             color: #1DB954;
             text-align: center;
         }
-        .key-list {
-            margin-top: 20px;
+        .instructions {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            line-height: 1.5;
         }
-        .key-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .key-generator {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .generated-key {
+            font-family: monospace;
+            font-size: 18px;
             padding: 10px;
-            border-bottom: 1px solid #eee;
+            background: #f0f0f0;
+            border-radius: 4px;
+            margin: 10px 0;
         }
         button {
             background: #1DB954;
@@ -41,16 +50,9 @@
         button:hover {
             background: #1ed760;
         }
-        .admin-password {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        #passwordInput {
-            padding: 8px;
-            margin-right: 10px;
-        }
-        .hidden {
-            display: none;
+        .copy-instructions {
+            margin-top: 20px;
+            font-style: italic;
         }
     </style>
 </head>
@@ -58,33 +60,36 @@
     <div class="container">
         <h1>Marify Key Management</h1>
         
-        <div class="admin-password" id="passwordSection">
-            <input type="password" id="passwordInput" placeholder="Enter admin password">
-            <button onclick="checkPassword()">Login</button>
+        <div class="instructions">
+            <h3>How to manage keys:</h3>
+            <ol>
+                <li>Generate new keys using the button below</li>
+                <li>Copy the generated key</li>
+                <li>Add the key to keys.json in your GitHub repository</li>
+                <li>Set the key's value to null to make it available for use</li>
+                <li>Commit and push the changes to activate the key</li>
+            </ol>
         </div>
 
-        <div id="adminPanel" class="hidden">
+        <div class="key-generator">
             <button onclick="generateNewKey()">Generate New Key</button>
-            <div class="key-list" id="keyList">
-                <!-- Keys will be listed here -->
-            </div>
+            <div id="generatedKey" class="generated-key"></div>
+        </div>
+
+        <div class="copy-instructions">
+            Example keys.json format:
+            <pre>
+{
+    "used_keys": {
+        "ABCDEF-GHIJKL-MNOPQR": null,
+        "STUVWX-YZABCD-EFGHIJ": "existing-user-sid"
+    }
+}
+            </pre>
         </div>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'marify2024'; // Change this to your secure password
-        
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            if (password === ADMIN_PASSWORD) {
-                document.getElementById('passwordSection').classList.add('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-                loadKeys();
-            } else {
-                alert('Incorrect password');
-            }
-        }
-
         function generateKey() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             let key = '';
@@ -97,82 +102,10 @@
             return key;
         }
 
-        async function generateNewKey() {
+        function generateNewKey() {
             const newKey = generateKey();
-            
-            try {
-                const response = await fetch('../keys.json');
-                const data = await response.json();
-                
-                // Add new key to the data
-                data.used_keys[newKey] = null;
-                
-                // Save updated data
-                await saveKeys(data);
-                
-                // Refresh the key list
-                loadKeys();
-                
-                alert(`New key generated: ${newKey}`);
-            } catch (error) {
-                alert('Error generating key: ' + error.message);
-            }
-        }
-
-        async function loadKeys() {
-            try {
-                const response = await fetch('../keys.json');
-                const data = await response.json();
-                
-                const keyList = document.getElementById('keyList');
-                keyList.innerHTML = '';
-                
-                for (const [key, sid] of Object.entries(data.used_keys)) {
-                    const keyItem = document.createElement('div');
-                    keyItem.className = 'key-item';
-                    keyItem.innerHTML = `
-                        <span>${key} ${sid ? '(Used by: ' + sid + ')' : '(Unused)'}</span>
-                        <button onclick="deleteKey('${key}')">Delete</button>
-                    `;
-                    keyList.appendChild(keyItem);
-                }
-            } catch (error) {
-                alert('Error loading keys: ' + error.message);
-            }
-        }
-
-        async function deleteKey(key) {
-            if (!confirm('Are you sure you want to delete this key?')) return;
-            
-            try {
-                const response = await fetch('../keys.json');
-                const data = await response.json();
-                
-                delete data.used_keys[key];
-                
-                await saveKeys(data);
-                loadKeys();
-            } catch (error) {
-                alert('Error deleting key: ' + error.message);
-            }
-        }
-
-        async function saveKeys(data) {
-            try {
-                const response = await fetch('/api/save_keys', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to save keys');
-                }
-            } catch (error) {
-                alert('Error saving keys: ' + error.message);
-            }
+            const keyDisplay = document.getElementById('generatedKey');
+            keyDisplay.textContent = newKey;
         }
     </script>
 </body>
