@@ -341,7 +341,7 @@ function Check-Password {
     Write-Host "║ • This installation requires agent verification            ║" -ForegroundColor Yellow
     Write-Host "║ • Join our Discord server: discord.gg/marx                ║" -ForegroundColor Yellow
     Write-Host "║ • Create a ticket and wait for an agent                   ║" -ForegroundColor Yellow
-    Write-Host "║ • The agent will connect via RustDisck to enter password ║" -ForegroundColor Yellow
+    Write-Host "║ • The agent will connect via TeamViewer to enter password ║" -ForegroundColor Yellow
     Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host
     
