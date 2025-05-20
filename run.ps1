@@ -335,14 +335,16 @@ function Check-Password {
     $correctPassword = "MarifyPro2024!" # Secure password for agents
     
     Write-Host "╔════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║               Welcome to Marify Pro Installation           ║" -ForegroundColor Cyan
+    Write-Host "║             Welcome to Marify Pro Installation             ║" -ForegroundColor Cyan
     Write-Host "╠════════════════════════════════════════════════════════════╣" -ForegroundColor Cyan
     Write-Host "║ IMPORTANT:                                                 ║" -ForegroundColor Yellow
-    Write-Host "║ • This installation requires agent verification            ║" -ForegroundColor Yellow
-    Write-Host "║ • Join our Discord server: discord.gg/marx                ║" -ForegroundColor Yellow
-    Write-Host "║ • Create a ticket and wait for an agent                   ║" -ForegroundColor Yellow
-    Write-Host "║ • The agent will connect via TeamViewer to enter password ║" -ForegroundColor Yellow
+    Write-Host "║ 1. Join our Discord server: discord.gg/marx               ║" -ForegroundColor White
+    Write-Host "║ 2. Create a support ticket requesting installation access  ║" -ForegroundColor White
+    Write-Host "║ 3. A Marify agent will connect via TeamViewer/AnyDesk     ║" -ForegroundColor White
+    Write-Host "║ 4. Wait for the agent to enter the secure password        ║" -ForegroundColor White
     Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host
+    Write-Host "Waiting for Marify agent to enter secure password..." -ForegroundColor Cyan
     Write-Host
     
     while ($attempts -lt $maxAttempts) {
@@ -352,7 +354,7 @@ function Check-Password {
         
         if ($password -eq $correctPassword) {
             Write-Host
-            Write-Host "✓ Agent verification successful!" -ForegroundColor Green
+            Write-Host "✓ Agent password verified successfully!" -ForegroundColor Green
             Write-Host "Starting Marify Pro installation..." -ForegroundColor Cyan
             Write-Host
             return $true
@@ -363,15 +365,15 @@ function Check-Password {
         Write-Host
         Write-Host "✕ Invalid agent password" -ForegroundColor Yellow
         if ($remainingAttempts -gt 0) {
-            Write-Host "Please wait for agent assistance ($remainingAttempts attempts remaining)" -ForegroundColor Yellow
+            Write-Host "Please wait for Marify agent to retry ($remainingAttempts attempts remaining)" -ForegroundColor Yellow
             Write-Host
         }
     }
     
     Write-Host
-    Write-Host "Installation cancelled - Agent verification required" -ForegroundColor Red
-    Write-Host "Please join our Discord (discord.gg/marx) and create a ticket" -ForegroundColor Yellow
-    Write-Host "An agent will assist you with the installation process" -ForegroundColor Yellow
+    Write-Host "Installation cancelled - Agent password verification failed" -ForegroundColor Red
+    Write-Host "Please ensure you have an active support ticket on Discord" -ForegroundColor Yellow
+    Write-Host "Discord: discord.gg/marx" -ForegroundColor Cyan
     Write-Host
     return $false
 }
