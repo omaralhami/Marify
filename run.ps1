@@ -308,8 +308,8 @@ function Get-Link {
     )
 
     switch ($mirror) {
-        $true { return "https://spotx-official.github.io/SpotX" + $endlink }
-        default { return "https://raw.githubusercontent.com/SpotX-Official/SpotX/main" + $endlink }
+        $true { return "https://omaralhami.github.io/Marify" + $endlink }
+        default { return "https://raw.githubusercontent.com/omaralhami/Marify/main" + $endlink }
     }
 }
 
@@ -1788,7 +1788,7 @@ if ($test_js) {
     while ($ch -notmatch '^y$|^n$')
 
     if ($ch -eq 'y') { 
-        $Url = "https://telegra.ph/SpotX-FAQ-09-19#Can-I-use-SpotX-and-Spicetify-together?"
+        $Url = "https://telegra.ph/Marify-FAQ-09-19#Can-I-use-Marify-and-Spicetify-together?"
         Start-Process $Url
     }
 

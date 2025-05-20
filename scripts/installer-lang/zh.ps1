@@ -1,8 +1,5 @@
 [PSCustomObject]@{
-    Welcome         = "
-╔════════════════════════════════╗
-║ 欢迎使用 SpotX 的 Windows 版本 ║
-╚════════════════════════════════╝"
+    Welcome         = "\n╔══════════════════════════════════╗\n║ 欢迎使用 Marify Pro 的 Windows 版本 ║\n╚══════════════════════════════════╝"
     Incorrect       = "糟糕，不正确的参数,"
     Incorrect2      = "请重新输入 "
     Download        = "下载错误"
@@ -23,7 +20,7 @@
     DelOrOver       = "是否要卸载当前版本 {0} 或者覆盖安装? Y [卸载] / N [覆盖安装]"
     DelOld          = "正在卸载旧的 Spotify..."
     NewV            = "检测到 Spotify 版本不受到支持"
-    NewV2           = "您的 Spotify {0} 版本没有经过测试，目前的推荐的版本是 {1}"
+    NewV2           = "您的 Spotify {0} 版本没有经过测试，目前的推荐的版本是 Marify Pro {1}"
     NewV3           = "您想要继续使用 {0} 版本吗 (可能会出现错误)？ [Y/N]"
     Recom           = "您想安装推荐的 {0} 版本吗 ? [Y/N]"
     DelNew          = "正在卸载未经测试的 Spotify 版本..."
@@ -39,8 +36,8 @@
     ModSpoti        = "修补 Spotify..."
     Error           = "错误"
     FileLocBroken   = "Spotify 文件已损坏，请请卸载客户端并重新运行脚本"
-    Spicetify       = "检测到 Spicetify，它必须在安装 SpotX 后进行安装。是否启用 FAQ 中的建议操作？ [Y/N]"
-    NoRestore       = "SpotX 已经安装，但是找不到文件 xpui.bak . `n请重新安装 Spotify 客户端后再次运行 install.bat"
+    Spicetify       = "检测到 Spicetify，它必须在安装 Marify Pro 后进行安装。是否启用 FAQ 中的建议操作？ [Y/N]"
+    NoRestore       = "Marify Pro 已经安装，但是找不到文件 xpui.bak . `n请重新安装 Spotify 客户端后再次运行 install.bat"
     InstallComplete = "安装完成"
     HostInfo        = "在 hosts 文件中发现了不需要的 URL"
     HostBak         = "备份原始 hosts 文件为 hosts.bak..."
