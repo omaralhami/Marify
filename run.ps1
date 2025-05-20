@@ -337,34 +337,50 @@ $lang = CallLang -clg $langCode
 Write-Host ($lang).Welcome
 Write-Host
 
-# KeyAuth License Check
+# KeyAuth License Check (with session init)
 $ownerid = "VtS9J0jfyI"
 $name = "Marify"
 $version = "1.0"
+$secret = "15468271e91d6968b38514df158e3916be5941a61aa614e8526923b1c98fdaef"
 $baseurl = "https://keyauth.win/api/1.2/"
 
+# 1. INIT SESSION
+$initBody = @{
+    type = "init"
+    name = $name
+    ownerid = $ownerid
+    ver = $version
+    secret = $secret
+}
+$initResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $initBody
+
+if ($initResponse.success -ne $true) {
+    Write-Host "KeyAuth initialization failed: $($initResponse.message)" -ForegroundColor Red
+    exit
+}
+
+$sessionid = $initResponse.sessionid
+
+# 2. PROMPT FOR KEY
 $key = Read-Host "Enter your Marify Pro license key"
 
-$body = @{
+# 3. VALIDATE KEY
+$loginBody = @{
     type = "login"
     key = $key
     name = $name
     ownerid = $ownerid
     ver = $version
+    sessionid = $sessionid
 }
+$loginResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $loginBody
 
-try {
-    $response = Invoke-RestMethod -Uri $baseurl -Method Post -Body $body
-    if ($response.success -ne $true) {
-        Write-Host "Invalid key: $($response.message)" -ForegroundColor Red
-        Write-Host "To buy a key, contact us on Discord: discord.gg/marx" -ForegroundColor Yellow
-        exit
-    } else {
-        Write-Host "Key is valid! Welcome to Marify Pro." -ForegroundColor Green
-    }
-} catch {
-    Write-Host "Error connecting to license server. Please check your internet connection." -ForegroundColor Red
+if ($loginResponse.success -ne $true) {
+    Write-Host "Invalid key: $($loginResponse.message)" -ForegroundColor Red
+    Write-Host "To buy a key, contact us on Discord: discord.gg/marx" -ForegroundColor Yellow
     exit
+} else {
+    Write-Host "Key is valid! Welcome to Marify Pro." -ForegroundColor Green
 }
 
 # Check version Windows
