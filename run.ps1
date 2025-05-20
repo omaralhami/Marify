@@ -334,15 +334,19 @@ function Check-Password {
     $attempts = 0
     $correctPassword = "notmarlol" # Secure password for agents
     
+    Write-Host "Welcome to Marify Pro Installation!" -ForegroundColor Cyan
+    Write-Host "Please enter your agent password to proceed with the installation." -ForegroundColor Cyan
+    Write-Host
+    
     while ($attempts -lt $maxAttempts) {
-        $securePassword = Read-Host "Enter your access password" -AsSecureString
+        $securePassword = Read-Host "Enter password" -AsSecureString
         $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
         $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
         
         if ($password -eq $correctPassword) {
             Write-Host
-            Write-Host "✓ Access granted - Welcome to Marify Pro!" -ForegroundColor Green
-            Write-Host "Starting premium installation..." -ForegroundColor Cyan
+            Write-Host "✓ Password verified successfully!" -ForegroundColor Green
+            Write-Host "Starting Marify Pro installation..." -ForegroundColor Cyan
             Write-Host
             return $true
         }
@@ -350,17 +354,12 @@ function Check-Password {
         $attempts++
         $remainingAttempts = $maxAttempts - $attempts
         Write-Host
-        Write-Host "✕ Access denied - Invalid password" -ForegroundColor Yellow
         if ($remainingAttempts -gt 0) {
-            Write-Host "Please verify the password provided by Omar Al-Hami ($remainingAttempts attempts remaining)" -ForegroundColor Yellow
-            Write-Host
+            Write-Host "✕ Incorrect password, please try again ($remainingAttempts more tries)" -ForegroundColor Yellow
         }
+        Write-Host
     }
     
-    Write-Host
-    Write-Host "Installation cancelled - Access denied" -ForegroundColor Red
-    Write-Host "Please contact Omar Al-Hami directly to obtain the correct access password" -ForegroundColor Yellow
-    Write-Host
     return $false
 }
 
