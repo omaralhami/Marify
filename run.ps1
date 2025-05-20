@@ -348,38 +348,16 @@ $userKey = Read-Host "Enter your Marify Pro license key"
 # Check key online
 $apiUrl = "https://omaralhami.github.io/Marify/api/check_key.html?key=$userKey&sid=$machineId"
 try {
-    # First check if key is valid
     $response = Invoke-RestMethod -Uri $apiUrl -Method Get
     
     if ($response.valid) {
-        # If key is valid but not bound, bind it
-        if ($response.message -eq "Key is valid and ready to bind") {
-            $bindUrl = "$apiUrl&bind=true"
-            $bindResponse = Invoke-RestMethod -Uri $bindUrl -Method Get
-            
-            if ($bindResponse.valid) {
-                Write-Host $bindResponse.message -ForegroundColor Green
-                
-                # Save binding locally as backup
-                $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
-                $binding | Set-Content $bindFile -Force
-                # Hide the file
-                attrib +h $bindFile
-            }
-            else {
-                Write-Host $bindResponse.message -ForegroundColor Red
-                exit
-            }
-        }
-        else {
-            Write-Host $response.message -ForegroundColor Green
-            
-            # Save binding locally as backup
-            $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
-            $binding | Set-Content $bindFile -Force
-            # Hide the file
-            attrib +h $bindFile
-        }
+        Write-Host $response.message -ForegroundColor Green
+        
+        # Save binding locally
+        $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
+        $binding | Set-Content $bindFile -Force
+        # Hide the file
+        attrib +h $bindFile
     }
     else {
         Write-Host $response.message -ForegroundColor Red
