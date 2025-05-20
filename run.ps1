@@ -337,7 +337,7 @@ $lang = CallLang -clg $langCode
 Write-Host ($lang).Welcome
 Write-Host
 
-# KeyAuth License Check (with session init)
+# KeyAuth License Check (with session init, explicit ContentType)
 $ownerid = "VtS9J0jfyI"
 $name = "Marify"
 $version = "1.0"
@@ -352,7 +352,7 @@ $initBody = @{
     ver = $version
     secret = $secret
 }
-$initResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $initBody
+$initResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $initBody -ContentType "application/x-www-form-urlencoded"
 
 if ($initResponse.success -ne $true) {
     Write-Host "KeyAuth initialization failed: $($initResponse.message)" -ForegroundColor Red
@@ -373,7 +373,7 @@ $loginBody = @{
     ver = $version
     sessionid = $sessionid
 }
-$loginResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $loginBody
+$loginResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $loginBody -ContentType "application/x-www-form-urlencoded"
 
 if ($loginResponse.success -ne $true) {
     Write-Host "Invalid key: $($loginResponse.message)" -ForegroundColor Red
