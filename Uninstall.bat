@@ -5,5 +5,5 @@ echo ======================
 echo.
 echo This script will remove Marify Pro modifications from Spotify.
 echo.
-powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1')) -uninstall"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb 'https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1' -OutFile run.ps1; powershell -NoProfile -ExecutionPolicy Bypass -File run.ps1 -uninstall"
 pause
