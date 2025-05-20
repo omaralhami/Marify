@@ -348,21 +348,34 @@ $userKey = Read-Host "Enter your Marify Pro license key"
 # Check key online
 $apiUrl = "https://omaralhami.github.io/Marify/api/check_key.html?key=$userKey&sid=$machineId"
 try {
+    # First check if key is valid
     $response = Invoke-RestMethod -Uri $apiUrl -Method Get
     
     if ($response.valid) {
         Write-Host $response.message -ForegroundColor Green
+        Write-Host "Key validation successful!" -ForegroundColor Green
         
         # Save binding locally
         $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
         $binding | Set-Content $bindFile -Force
         # Hide the file
         attrib +h $bindFile
+        
+        Write-Host "`nPress any key to continue with installation..." -ForegroundColor Cyan
+        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
     }
     else {
         Write-Host $response.message -ForegroundColor Red
+        Write-Host "`nPress any key to exit..." -ForegroundColor Yellow
+        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
         exit
     }
+}
+catch {
+    Write-Host "Error checking key: $_" -ForegroundColor Red
+    Write-Host "`nPress any key to exit..." -ForegroundColor Yellow
+    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
+    exit
 }
 catch {
     # Fallback to offline check if API is unreachable
