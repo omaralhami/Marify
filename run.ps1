@@ -2143,3 +2143,33 @@ app.autostart-mode="off"
 if ($start_spoti) { Start-Process -WorkingDirectory $spotifyDirectory -FilePath $spotifyExecutable }
 
 Write-Host ($lang).InstallComplete`n -ForegroundColor Green
+
+# KeyAuth License Check
+$ownerid = "VtS9J0jfyI"
+$name = "Marify"
+$version = "1.0"
+$baseurl = "https://keyauth.win/api/1.2/"
+
+$key = Read-Host "Enter your Marify Pro license key"
+
+$body = @{
+    type = "login"
+    key = $key
+    name = $name
+    ownerid = $ownerid
+    ver = $version
+}
+
+try {
+    $response = Invoke-RestMethod -Uri $baseurl -Method Post -Body $body
+    if ($response.success -ne $true) {
+        Write-Host "Invalid key: $($response.message)" -ForegroundColor Red
+        Write-Host "To buy a key, contact us on Discord: discord.gg/marx" -ForegroundColor Yellow
+        exit
+    } else {
+        Write-Host "Key is valid! Welcome to Marify Pro." -ForegroundColor Green
+    }
+} catch {
+    Write-Host "Error connecting to license server. Please check your internet connection." -ForegroundColor Red
+    exit
+}
