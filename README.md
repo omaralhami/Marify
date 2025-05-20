@@ -1,14 +1,14 @@
 <p align="center">
-  <a href="https://github.com/SpotX-Official/SpotX/releases"><img src="https://spotx-official.github.io/images/logos/logo.png" /></a>
+  <a href="https://github.com/omaralhami/Marify"><img src="https://omaralhami.github.io/images/logos/logo.png" /></a>
 </p>
 
 <p align="center">
-      <a href="https://t.me/spotify_windows_mod"><img src="https://spotx-official.github.io/images/shields/SpotX_Channel.svg"></a>
-        <a href="https://t.me/SpotxCommunity"><img src="https://spotx-official.github.io/images/shields/SpotX_Community.svg"></a>
-        <a href="https://github.com/SpotX-Official/SpotX-Bash"><img src="https://spotx-official.github.io/images/shields/SpotX_for_Mac&Linux.svg"></a>
-        <a href="https://telegra.ph/SpotX-FAQ-09-19"><img src="https://spotx-official.github.io/images/shields/faq.svg"></a>
+      <a href="https://t.me/marify_support"><img src="https://omaralhami.github.io/images/shields/Marify_Channel.svg"></a>
+        <a href="https://t.me/MarifyCommunity"><img src="https://omaralhami.github.io/images/shields/Marify_Community.svg"></a>
+        <a href="https://github.com/omaralhami/Marify-Bash"><img src="https://omaralhami.github.io/images/shields/Marify_for_Mac&Linux.svg"></a>
+        <a href="https://telegra.ph/Marify-FAQ-09-19"><img src="https://omaralhami.github.io/images/shields/faq.svg"></a>
         </p>
-         <h2> <div align="center"><b> Patcher for Spotify Desktop Client on Windows </b></div> </h2>
+         <h2> <div align="center"><b> Marify Pro - Enhanced Spotify Desktop Client for Windows </b></div> </h2>
 
 <p align="center"> •
   <a href="#requirements">Requirements</a> •
@@ -31,8 +31,9 @@
 - **Blocks all banner, video, and audio ads** in the client
 - **Hiding podcasts, episodes, and audiobooks** from the homepage (optional)
 - **Block Spotify automatic updates** (optional)
-- **More experimental features have been activated** ([see the full list](https://github.com/SpotX-Official/SpotX/discussions/50))
+- **More experimental features have been activated** ([see the full list](https://github.com/Mar-Services/Marify/discussions/50))
 - **Disabled Sentry's console log/error/warning messages** to Spotify developers, halted user interaction logging, and performed code minification
+- **Premium Mar Services Support** and regular updates
 
 <h1 id="installation--update">Installation / Update</h1>
 <h3>Choose installation type:</h3>
@@ -42,24 +43,24 @@
   #### During installation, you need to confirm some actions, also contains:
   
   - New theme activated (new right and left sidebar, some cover change)
-  - All [experimental features](https://github.com/SpotX-Official/SpotX/discussions/50) included
+  - All [experimental features](https://github.com/Mar-Services/Marify/discussions/50) included
 
   <h4> </h4>
   
-#### Just download and run [Install.bat](https://raw.githack.com/amd64fox/SpotX/main/Install_New_theme.bat)
+#### Just download and run [Install.bat](https://raw.githubusercontent.com/omaralhami/Marify/main/Install_New_theme.bat)
 
 or
 
 #### Run The following command in PowerShell:
 
 ```ps1
-iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -new_theme"
+iex "& { $(iwr -useb 'https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1') } -new_theme"
 ```
 
 #### mirror
 
 ```ps1
-iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -new_theme"
+iex "& { $(iwr -useb 'https://omaralhami.github.io/run.ps1') } -m -new_theme"
 ```
 
 </details>
@@ -72,24 +73,24 @@ iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -new_theme
   - Forced installation of version 1.2.13 (since the old theme was removed in subsequent versions)
   - Old theme activated
   - Automatic blocking of Spotify updates
-  - All [experimental features](https://github.com/SpotX-Official/SpotX/discussions/50) included
+  - All [experimental features](https://github.com/Mar-Services/Marify/discussions/50) included
 
   <h4> </h4>
   
-#### Just download and run [Install.bat](https://raw.githack.com/amd64fox/SpotX/main/Install_Old_theme.bat)
+#### Just download and run [Install.bat](https://raw.githubusercontent.com/omaralhami/Marify/main/Install_Old_theme.bat)
 
 or
 
 #### Run The following command in PowerShell:
 
 ```ps1
-iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -v 1.2.13.661.ga588f749-4064 -confirm_spoti_recomended_over -block_update_on"
+iex "& { $(iwr -useb 'https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1') } -v 1.2.13.661.ga588f749-4064 -confirm_spoti_recomended_over -block_update_on"
 ```
 
 #### mirror
 
 ```ps1
-iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -v 1.2.13.661.ga588f749-4064 -confirm_spoti_recomended_over -block_update_on"
+iex "& { $(iwr -useb 'https://omaralhami.github.io/run.ps1') } -m -v 1.2.13.661.ga588f749-4064 -confirm_spoti_recomended_over -block_update_on"
 ```
 
 </details>
@@ -101,9 +102,9 @@ iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -v 1.2.13.
   
   - New theme activated (new right and left sidebar, some cover change)
   - Hiding podcasts/episodes/audiobooks from the homepage
-  - Activated [static theme](https://github.com/SpotX-Official/SpotX/discussions/50#discussioncomment-4096066) <kbd>spotify</kbd> for lyrics
-  - Hiding [ad-like sections](https://github.com/SpotX-Official/SpotX/discussions/50#discussioncomment-4478943)
-  - All [experimental features](https://github.com/SpotX-Official/SpotX/discussions/50) included
+  - Activated [static theme](https://github.com/Mar-Services/Marify/discussions/50#discussioncomment-4096066) <kbd>spotify</kbd> for lyrics
+  - Hiding [ad-like sections](https://github.com/Mar-Services/Marify/discussions/50#discussioncomment-4478943)
+  - All [experimental features](https://github.com/Mar-Services/Marify/discussions/50) included
   - Removal of Spotify MS if it was found 
   - Installation of the recommended version of Spotify (if another client has already been found, it will be installed over) 
   - Blocking of Spotify updates
@@ -111,20 +112,20 @@ iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -v 1.2.13.
   
 <h4> </h4>
 
-#### Just download and run [Install_Auto.bat](https://raw.githack.com/amd64fox/SpotX/main/scripts/Install_Auto.bat)
+#### Just download and run [Install_Auto.bat](https://raw.githubusercontent.com/omaralhami/Marify/main/scripts/Install_Auto.bat)
 
 or
 
 #### Run The following command in PowerShell:
 
 ```ps1
-iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_off -block_update_on -start_spoti -new_theme -adsections_off -lyrics_stat spotify"
+iex "& { $(iwr -useb 'https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1') } -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_off -block_update_on -start_spoti -new_theme -adsections_off -lyrics_stat spotify"
 ```
 
 #### mirror
 
 ```ps1
-iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_off -block_update_on -start_spoti -new_theme -adsections_off -lyrics_stat spotify"
+iex "& { $(iwr -useb 'https://omaralhami.github.io/run.ps1') } -m -confirm_uninstall_ms_spoti -confirm_spoti_recomended_over -podcasts_off -block_update_on -start_spoti -new_theme -adsections_off -lyrics_stat spotify"
 ```
 
 </details>
@@ -139,24 +140,24 @@ iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -confirm_u
   
   - New theme activated (new right and left sidebar, some cover change)
   - Disabled only audio ads in podcasts
-  - All [experimental features](https://github.com/SpotX-Official/SpotX/discussions/50) included
+  - All [experimental features](https://github.com/Mar-Services/Marify/discussions/50) included
 
   <h4> </h4>
   
-#### Just download and run [Install_Prem.bat](https://raw.githack.com/amd64fox/SpotX/main/scripts/Install_Prem.bat)
+#### Just download and run [Install_Prem.bat](https://raw.githubusercontent.com/omaralhami/Marify/main/scripts/Install_Prem.bat)
 
 or
 
 #### Run The following command in PowerShell:
 
 ```ps1
-iex "& { $(iwr -useb 'https://raw.githubusercontent.com/SpotX-Official/spotx-official.github.io/main/run.ps1') } -premium -new_theme"
+iex "& { $(iwr -useb 'https://raw.githubusercontent.com/omaralhami/Marify/main/run.ps1') } -premium -new_theme"
 ```
 
 #### mirror
 
 ```ps1
-iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -premium -new_theme"
+iex "& { $(iwr -useb 'https://omaralhami.github.io/run.ps1') } -m -premium -new_theme"
 ```
 
 </details>
@@ -164,7 +165,7 @@ iex "& { $(iwr -useb 'https://spotx-official.github.io/run.ps1') } -m -premium -
 <details>
 <summary><small>Installing with parameters</small></summary><p>
 
-You can specify various parameters for a more flexible installation, more [details here](https://github.com/SpotX-Official/SpotX/discussions/60)
+You can specify various parameters for a more flexible installation, more [details here](https://github.com/Mar-Services/Marify/discussions/60)
 
 </details>
 
@@ -172,7 +173,7 @@ You can specify various parameters for a more flexible installation, more [detai
 
 <h1 id="uninstall">Uninstall</h1>
 
-- Just run [Uninstall.bat](https://raw.githack.com/amd64fox/SpotX/main/Uninstall.bat)
+- Just run [Uninstall.bat](https://raw.githubusercontent.com/omaralhami/Marify/main/Uninstall.bat)
 
 or
 
@@ -180,8 +181,8 @@ or
 
 <h1 id="faq">FAQ</h1>
 
- Read [FAQ](https://telegra.ph/SpotX-FAQ-09-19)
+ Read [FAQ](https://telegra.ph/Marify-FAQ-09-19)
 
 <h1 id="disclaimer">Disclaimer</h1>
 
- SpotX is a modified version of the official Spotify client, provided as an evaluation version, you use it at your own risk.
+ Marify Pro is a modified version of the official Spotify client, provided by Mar Services. This is a premium service and you use it at your own risk. All rights reserved © Mar Services 2024.
