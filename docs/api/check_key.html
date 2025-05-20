@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Marify Key Check</title>
+    <script>
+        // Get the key and SID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const key = urlParams.get('key');
+        const sid = urlParams.get('sid');
+        const bind = urlParams.get('bind') === 'true';
+
+        // Load used keys from keys.json
+        fetch('../keys.json')
+            .then(response => response.json())
+            .then(async data => {
+                let result = {
+                    valid: false,
+                    message: "Invalid key"
+                };
+
+                if (key && sid) {
+                    if (data.used_keys.hasOwnProperty(key)) {
+                        // Key exists, check binding
+                        if (data.used_keys[key] === null && bind) {
+                            // Key is unused and we want to bind it
+                            data.used_keys[key] = sid;
+                            
+                            // Save the updated data
+                            try {
+                                await fetch('/api/save_keys', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(data)
+                                });
+                                
+                                result = {
+                                    valid: true,
+                                    message: "Key successfully bound to your PC"
+                                };
+                            } catch (error) {
+                                result = {
+                                    valid: false,
+                                    message: "Error binding key: " + error.message
+                                };
+                            }
+                        }
+                        else if (data.used_keys[key] === sid) {
+                            // Key is already bound to this PC
+                            result = {
+                                valid: true,
+                                message: "Key valid and matches this PC"
+                            };
+                        }
+                        else if (data.used_keys[key] !== null) {
+                            // Key is bound to a different PC
+                            result = {
+                                valid: false,
+                                message: "Key is already used on another PC"
+                            };
+                        }
+                        else {
+                            // Key exists but not bound
+                            result = {
+                                valid: true,
+                                message: "Key is valid and ready to bind"
+                            };
+                        }
+                    }
+                }
+
+                // Return result as JSON
+                document.write(JSON.stringify(result));
+            })
+            .catch(error => {
+                document.write(JSON.stringify({
+                    valid: false,
+                    message: "Error checking key: " + error.message
+                }));
+            });
+    </script>
+</head>
+<body>
+    <!-- Response will be written here by JavaScript -->
+</body>
+</html> 

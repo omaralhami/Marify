@@ -337,51 +337,131 @@ $lang = CallLang -clg $langCode
 Write-Host ($lang).Welcome
 Write-Host
 
-# KeyAuth License Check (with session init, explicit ContentType)
-$ownerid = "VtS9J0jfyI"
-$name = "Marify"
-$version = "1.0"
-$secret = "15468271e91d6968b38514df158e3916be5941a61aa614e8526923b1c98fdaef"
-$baseurl = "https://keyauth.win/api/1.2/"
+# --- Marify Pro Static Key System (50 keys, 1 PC per key) ---
+# List of 50 random keys (replace with your own if needed)
+$validKeys = @(
+    "5476MK-YQDH5A-2L3Z7Z",
+    "A1B2C3-D4E5F6-G7H8I9",
+    "J0K1L2-M3N4O5-P6Q7R8",
+    "S9T0U1-V2W3X4-Y5Z6A1",
+    "B2C3D4-E5F6G7-H8I9J0",
+    "K1L2M3-N4O5P6-Q7R8S9",
+    "T0U1V2-W3X4Y5-Z6A1B2",
+    "C3D4E5-F6G7H8-I9J0K1",
+    "L2M3N4-O5P6Q7-R8S9T0",
+    "U1V2W3-X4Y5Z6-A1B2C3",
+    "D4E5F6-G7H8I9-J0K1L2",
+    "M3N4O5-P6Q7R8-S9T0U1",
+    "V2W3X4-Y5Z6A1-B2C3D4",
+    "E5F6G7-H8I9J0-K1L2M3",
+    "N4O5P6-Q7R8S9-T0U1V2",
+    "W3X4Y5-Z6A1B2-C3D4E5",
+    "F6G7H8-I9J0K1-L2M3N4",
+    "O5P6Q7-R8S9T0-U1V2W3",
+    "X4Y5Z6-A1B2C3-D4E5F6",
+    "G7H8I9-J0K1L2-M3N4O5",
+    "P6Q7R8-S9T0U1-V2W3X4",
+    "Y5Z6A1-B2C3D4-E5F6G7",
+    "H8I9J0-K1L2M3-N4O5P6",
+    "Q7R8S9-T0U1V2-W3X4Y5",
+    "Z6A1B2-C3D4E5-F6G7H8",
+    "I9J0K1-L2M3N4-O5P6Q7",
+    "R8S9T0-U1V2W3-X4Y5Z6",
+    "A1B2C3-D4E5F6-G7H8I9",
+    "J0K1L2-M3N4O5-P6Q7R8",
+    "S9T0U1-V2W3X4-Y5Z6A1",
+    "B2C3D4-E5F6G7-H8I9J0",
+    "K1L2M3-N4O5P6-Q7R8S9",
+    "T0U1V2-W3X4Y5-Z6A1B2",
+    "C3D4E5-F6G7H8-I9J0K1",
+    "L2M3N4-O5P6Q7-R8S9T0",
+    "U1V2W3-X4Y5Z6-A1B2C3",
+    "D4E5F6-G7H8I9-J0K1L2",
+    "M3N4O5-P6Q7R8-S9T0U1",
+    "V2W3X4-Y5Z6A1-B2C3D4",
+    "E5F6G7-H8I9J0-K1L2M3",
+    "N4O5P6-Q7R8S9-T0U1V2",
+    "W3X4Y5-Z6A1B2-C3D4E5",
+    "F6G7H8-I9J0K1-L2M3N4",
+    "O5P6Q7-R8S9T0-U1V2W3",
+    "X4Y5Z6-A1B2C3-D4E5F6",
+    "G7H8I9-J0K1L2-M3N4O5",
+    "P6Q7R8-S9T0U1-V2W3X4",
+    "Y5Z6A1-B2C3D4-E5F6G7",
+    "H8I9J0-K1L2M3-N4O5P6",
+    "Q7R8S9-T0U1V2-W3X4Y5"
+)
 
-# 1. INIT SESSION
-$initBody = @{
-    type = "init"
-    name = $name
-    ownerid = $ownerid
-    ver = $version
-    secret = $secret
+# Use Windows SID as machine ID
+$machineId = (Get-WmiObject Win32_UserAccount | Where-Object { $_.Name -eq $env:USERNAME }).SID
+$bindFile = "$env:APPDATA\\.marifypro_keybind"
+
+$userKey = Read-Host "Enter your Marify Pro license key"
+
+# Check key online
+$apiUrl = "https://omaralhami.github.io/Marify/api/check_key.html?key=$userKey&sid=$machineId"
+try {
+    # First check if key is valid
+    $response = Invoke-RestMethod -Uri $apiUrl -Method Get
+    
+    if ($response.valid) {
+        # If key is valid but not bound, bind it
+        if ($response.message -eq "Key is valid and ready to bind") {
+            $bindUrl = "$apiUrl&bind=true"
+            $bindResponse = Invoke-RestMethod -Uri $bindUrl -Method Get
+            
+            if ($bindResponse.valid) {
+                Write-Host $bindResponse.message -ForegroundColor Green
+                
+                # Save binding locally as backup
+                $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
+                $binding | Set-Content $bindFile -Force
+                # Hide the file
+                attrib +h $bindFile
+            }
+            else {
+                Write-Host $bindResponse.message -ForegroundColor Red
+                exit
+            }
+        }
+        else {
+            Write-Host $response.message -ForegroundColor Green
+            
+            # Save binding locally as backup
+            $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
+            $binding | Set-Content $bindFile -Force
+            # Hide the file
+            attrib +h $bindFile
+        }
+    }
+    else {
+        Write-Host $response.message -ForegroundColor Red
+        exit
+    }
 }
-$initResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $initBody -ContentType "application/x-www-form-urlencoded"
-
-if ($initResponse.success -ne $true) {
-    Write-Host "KeyAuth initialization failed: $($initResponse.message)" -ForegroundColor Red
-    exit
+catch {
+    # Fallback to offline check if API is unreachable
+    Write-Host "Could not reach license server, falling back to offline check..." -ForegroundColor Yellow
+    
+    # Check for existing binding
+    if (Test-Path $bindFile) {
+        $binding = Get-Content $bindFile | ConvertFrom-Json
+        if ($binding.Key -ne $userKey) {
+            Write-Host "A different key is already bound to this PC. Contact support." -ForegroundColor Red
+            exit
+        }
+        if ($binding.MachineId -ne $machineId) {
+            Write-Host "This key is already used on another PC. Contact support." -ForegroundColor Red
+            exit
+        }
+        Write-Host "Key validated offline successfully!" -ForegroundColor Green
+    } else {
+        Write-Host "Cannot validate key offline for first-time use. Please check your internet connection." -ForegroundColor Red
+        exit
+    }
 }
 
-$sessionid = $initResponse.sessionid
-
-# 2. PROMPT FOR KEY
-$key = Read-Host "Enter your Marify Pro license key"
-
-# 3. VALIDATE KEY
-$loginBody = @{
-    type = "login"
-    key = $key
-    name = $name
-    ownerid = $ownerid
-    ver = $version
-    sessionid = $sessionid
-}
-$loginResponse = Invoke-RestMethod -Uri $baseurl -Method Post -Body $loginBody -ContentType "application/x-www-form-urlencoded"
-
-if ($loginResponse.success -ne $true) {
-    Write-Host "Invalid key: $($loginResponse.message)" -ForegroundColor Red
-    Write-Host "To buy a key, contact us on Discord: discord.gg/marx" -ForegroundColor Yellow
-    exit
-} else {
-    Write-Host "Key is valid! Welcome to Marify Pro." -ForegroundColor Green
-}
+Write-Host "Welcome to Marify Pro!" -ForegroundColor Green
 
 # Check version Windows
 $os = Get-CimInstance -ClassName "Win32_OperatingSystem" -ErrorAction SilentlyContinue
