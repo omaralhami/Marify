@@ -329,77 +329,45 @@ function CallLang($clg) {
     }
 }
 
-# Set language code for script.
-$langCode = Format-LanguageCode -LanguageCode $Language
+function Check-Password {
+    $maxAttempts = 3
+    $attempts = 0
+    $correctPassword = "notmarlol" # Secure password for agents
+    
+    while ($attempts -lt $maxAttempts) {
+        $securePassword = Read-Host "Please enter password to continue" -AsSecureString
+        $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
+        $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+        
+        if ($password -eq $correctPassword) {
+            return $true
+        }
+        
+        $attempts++
+        $remainingAttempts = $maxAttempts - $attempts
+        Write-Host "Incorrect password. Remaining attempts: $remainingAttempts" -ForegroundColor Red
+        Write-Host
+    }
+    
+    return $false
+}
 
+# Call language setup
+$langCode = Format-LanguageCode -LanguageCode $Language
 $lang = CallLang -clg $langCode
 
 Write-Host ($lang).Welcome
 Write-Host
 
-# Use online key validation system
-
-# Use Windows SID as machine ID
-$machineId = (Get-WmiObject Win32_UserAccount | Where-Object { $_.Name -eq $env:USERNAME }).SID
-$bindFile = "$env:APPDATA\\.marifypro_keybind"
-
-$userKey = Read-Host "Enter your Marify Pro license key"
-
-# Check key online
-$apiUrl = "https://omaralhami.github.io/Marify/api/check_key.html?key=$userKey&sid=$machineId"
-try {
-    # First check if key is valid
-    $response = Invoke-RestMethod -Uri $apiUrl -Method Get
-    
-    if ($response.valid) {
-        Write-Host $response.message -ForegroundColor Green
-        Write-Host "Key validation successful!" -ForegroundColor Green
-        
-        # Save binding locally
-        $binding = @{ Key = $userKey; MachineId = $machineId } | ConvertTo-Json
-        $binding | Set-Content $bindFile -Force
-        # Hide the file
-        attrib +h $bindFile
-        
-        Write-Host "`nPress any key to continue with installation..." -ForegroundColor Cyan
-        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
-    }
-    else {
-        Write-Host $response.message -ForegroundColor Red
-        Write-Host "`nPress any key to exit..." -ForegroundColor Yellow
-        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
-        exit
-    }
+# Check password before proceeding
+if (-not (Check-Password)) {
+    Write-Host "Maximum password attempts exceeded. Installation aborted." -ForegroundColor Red
+    $tempDirectory = $PWD
+    Pop-Location
+    Start-Sleep -Milliseconds 200
+    Remove-Item -Recurse -LiteralPath $tempDirectory
+    Exit
 }
-catch {
-    Write-Host "Error checking key: $_" -ForegroundColor Red
-    Write-Host "`nPress any key to exit..." -ForegroundColor Yellow
-    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown')
-    exit
-}
-catch {
-    # Fallback to offline check if API is unreachable
-    Write-Host "Could not reach license server, falling back to offline check..." -ForegroundColor Yellow
-    
-    # Check for existing binding
-    if (Test-Path $bindFile) {
-        $binding = Get-Content $bindFile | ConvertFrom-Json
-        if ($binding.Key -ne $userKey) {
-            Write-Host "A different key is already bound to this PC. Contact support." -ForegroundColor Red
-            exit
-        }
-        if ($binding.MachineId -ne $machineId) {
-            Write-Host "This key is already used on another PC. Contact support." -ForegroundColor Red
-            exit
-        }
-        Write-Host "Key validated offline successfully!" -ForegroundColor Green
-    } else {
-        Write-Host "Cannot validate key offline for first-time use. Please check your internet connection." -ForegroundColor Red
-        exit
-    }
-}
-
-Write-Host "Welcome to Marify Pro!" -ForegroundColor Green
 
 # Check version Windows
 $os = Get-CimInstance -ClassName "Win32_OperatingSystem" -ErrorAction SilentlyContinue
