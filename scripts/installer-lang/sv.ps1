@@ -1,5 +1,5 @@
 [PSCustomObject]@{
-    Welcome = """
+    Welcome = "
     ███╗   ███╗ █████╗ ██████╗ ██╗███████╗██╗   ██╗    ██████╗ ██████╗  ██████╗
     ████╗ ████║██╔══██╗██╔══██╗██║██╔════╝╚██╗ ██╔╝    ██╔══██╗██╔══██╗██╔═══██╗
     ██╔████╔██║███████║██████╔╝██║█████╗   ╚████╔╝     ██████╔╝██████╔╝██║   ██║
@@ -10,7 +10,7 @@
              Marify Pro - Make Spotify Premium LIFETIME
     
                     Join us at discord.gg/marx
-                    """
+                    "
     Incorrect       = "Hoppsan, ett felaktigt värde,"
     Incorrect2      = "ange igen igenom "
     Download        = "Fel vid nedladdning"
