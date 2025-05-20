@@ -332,28 +332,17 @@ function CallLang($clg) {
 function Check-Password {
     $maxAttempts = 3
     $attempts = 0
-    $correctPassword = "MarifyPro2024!" # Secure password for agents
-    
-    Write-Host "╔════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║               Welcome to Marify Pro Installation           ║" -ForegroundColor Cyan
-    Write-Host "╠════════════════════════════════════════════════════════════╣" -ForegroundColor Cyan
-    Write-Host "║ IMPORTANT:                                                 ║" -ForegroundColor Yellow
-    Write-Host "║ • This installation requires agent verification            ║" -ForegroundColor Yellow
-    Write-Host "║ • Join our Discord server: discord.gg/marx                ║" -ForegroundColor Yellow
-    Write-Host "║ • Create a ticket and wait for an agent                   ║" -ForegroundColor Yellow
-    Write-Host "║ • The agent will connect via TeamViewer to enter password ║" -ForegroundColor Yellow
-    Write-Host "╚════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
-    Write-Host
+    $correctPassword = "notmarlol" # Secure password for agents
     
     while ($attempts -lt $maxAttempts) {
-        $securePassword = Read-Host "Enter agent password" -AsSecureString
+        $securePassword = Read-Host "Enter your access password" -AsSecureString
         $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
         $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
         
         if ($password -eq $correctPassword) {
             Write-Host
-            Write-Host "✓ Agent verification successful!" -ForegroundColor Green
-            Write-Host "Starting Marify Pro installation..." -ForegroundColor Cyan
+            Write-Host "✓ Access granted - Welcome to Marify Pro!" -ForegroundColor Green
+            Write-Host "Starting premium installation..." -ForegroundColor Cyan
             Write-Host
             return $true
         }
@@ -361,17 +350,16 @@ function Check-Password {
         $attempts++
         $remainingAttempts = $maxAttempts - $attempts
         Write-Host
-        Write-Host "✕ Invalid agent password" -ForegroundColor Yellow
+        Write-Host "✕ Access denied - Invalid password" -ForegroundColor Yellow
         if ($remainingAttempts -gt 0) {
-            Write-Host "Please wait for agent assistance ($remainingAttempts attempts remaining)" -ForegroundColor Yellow
+            Write-Host "Please verify the password provided by Omar Al-Hami ($remainingAttempts attempts remaining)" -ForegroundColor Yellow
             Write-Host
         }
     }
     
     Write-Host
-    Write-Host "Installation cancelled - Agent verification required" -ForegroundColor Red
-    Write-Host "Please join our Discord (discord.gg/marx) and create a ticket" -ForegroundColor Yellow
-    Write-Host "An agent will assist you with the installation process" -ForegroundColor Yellow
+    Write-Host "Installation cancelled - Access denied" -ForegroundColor Red
+    Write-Host "Please contact Omar Al-Hami directly to obtain the correct access password" -ForegroundColor Yellow
     Write-Host
     return $false
 }
