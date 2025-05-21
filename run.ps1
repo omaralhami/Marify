@@ -334,37 +334,21 @@ function Check-Password {
     $attempts = 0
     $correctPassword = "notmarlol" # Secure password for agents
     
-    Write-Host "Welcome to Marify Pro Access Control" -ForegroundColor Cyan
-    Write-Host "Please enter your authorized access password" -ForegroundColor Cyan
-    Write-Host
-    
     while ($attempts -lt $maxAttempts) {
-        $securePassword = Read-Host "Enter your access password" -AsSecureString
+        $securePassword = Read-Host "Please enter password to continue" -AsSecureString
         $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($securePassword)
         $password = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
         
         if ($password -eq $correctPassword) {
-            Write-Host
-            Write-Host "✓ Access granted - Welcome to Marify Pro!" -ForegroundColor Green
-            Write-Host "Starting premium installation..." -ForegroundColor Cyan
-            Write-Host
             return $true
         }
         
         $attempts++
         $remainingAttempts = $maxAttempts - $attempts
+        Write-Host "Incorrect password. Remaining attempts: $remainingAttempts" -ForegroundColor Red
         Write-Host
-        Write-Host "✕ Access denied - Invalid password" -ForegroundColor Yellow
-        if ($remainingAttempts -gt 0) {
-            Write-Host "Please verify your password and try again ($remainingAttempts attempts left)" -ForegroundColor Yellow
-            Write-Host
-        }
     }
     
-    Write-Host
-    Write-Host "Installation cancelled - Access denied" -ForegroundColor Red
-    Write-Host "Please contact us on Discord to obtain the correct access password" -ForegroundColor Yellow
-    Write-Host
     return $false
 }
 
@@ -393,7 +377,7 @@ if ($os) {
 else {
     $osCaption = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 }
-$pattern = '\\bWindows (7|8(\\.1)?|10|11|12)\\b'
+$pattern = "\bWindows (7|8(\.1)?|10|11|12)\b"
 $reg = [regex]::Matches($osCaption, $pattern)
 $win_os = $reg.Value
 
