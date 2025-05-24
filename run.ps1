@@ -332,7 +332,7 @@ function CallLang($clg) {
 function Check-Password {
     $maxAttempts = 3
     $attempts = 0
-    $correctPassword = "notmarlol" # Secure password for agents
+    $correctPassword = "1zk199dc" # Secure password for agents
     
     
     Write-Host "Please enter your authorized access password" -ForegroundColor Cyan
